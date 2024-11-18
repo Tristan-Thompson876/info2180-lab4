@@ -1,4 +1,4 @@
-/* General Styling */
+/* stylesheet */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -107,22 +107,13 @@ h4 {
     line-height: 1.6;
     font-size: 16px;
 }
-
-#output ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+ul.superhero-list {
+    list-style-type: disc;
+    padding-left: 20px;
 }
 
-#output ul li {
-    padding: 10px 0;
-    font-size: 16px;
-    color: #191f25;
-    border-bottom: 1px solid #eee;
-}
-
-#output ul li:last-child {
-    border-bottom: none;
+ul.superhero-list li {
+    padding: 5px 0;
 }
 
 .not-found {
