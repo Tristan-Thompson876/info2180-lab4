@@ -3,12 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('searchInput');
     const outputDiv = document.getElementById('output');
 
-    // Function to sanitize input
     const sanitizeInput = (input) => {
         return input.replace(/[<>{}]/g, '').trim();
     };
 
-    // Function to fetch superheroes
+    // Function to fetch the heroes
     const fetchSuperheroes = async (query = '') => {
         try {
             const sanitizedQuery = sanitizeInput(query);
@@ -28,17 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            if (!query) {
-                // Show alert for empty search
-                alert(htmlContent.replace(/<[^>]*>/g, '').trim());
-            }
-            
             outputDiv.innerHTML = htmlContent;
 
-            // Add bullet points to list items if it's the list view
             if (htmlContent.includes('<ul>')) {
                 const listItems = outputDiv.querySelectorAll('li');
                 listItems.forEach(li => {
+                    // bullet points
                     if (!li.textContent.startsWith('•')) {
                         li.textContent = '• ' + li.textContent;
                     }
@@ -62,3 +56,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+//
