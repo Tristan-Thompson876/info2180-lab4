@@ -63,10 +63,43 @@ $superheroes = [
   ], 
 ];
 
-?>
+function sanitizeInput($input) {
+    return htmlspecialchars(trim($input), ENT_QUOTES, 'UTF-8');
+}
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+// Get and sanitize search query if it exists
+$query = isset($_GET['query']) ? sanitizeInput($_GET['query']) : '';
+
+// Function to search for a superhero (case-insensitive)
+function searchSuperhero($superheroes, $query) {
+    $query = strtolower($query);
+    foreach ($superheroes as $hero) {
+        if (strtolower($hero['name']) === $query || 
+            strtolower($hero['alias']) === $query) {
+            return $hero;
+        }
+    }
+    return null;
+}
+
+// If there's a search query
+if ($query !== '') {
+    $hero = searchSuperhero($superheroes, $query);
+    if ($hero) {
+        echo "<div class='superhero-details'>";
+        echo "<h3>" . htmlspecialchars($hero['alias'], ENT_QUOTES, 'UTF-8') . "</h3>";
+        echo "<h4>A.K.A " . htmlspecialchars($hero['name'], ENT_QUOTES, 'UTF-8') . "</h4>";
+        echo "<p>" . htmlspecialchars($hero['biography'], ENT_QUOTES, 'UTF-8') . "</p>";
+        echo "</div>";
+    } else {
+        echo "<div class='not-found'>SUPERHERO NOT FOUND</div>";
+    }
+} else {
+    // Return all superheroes in a list
+    echo "<ul class='superhero-list'>";
+    foreach ($superheroes as $hero) {
+        echo "<li>" . htmlspecialchars($hero['alias'], ENT_QUOTES, 'UTF-8') . "</li>";
+    }
+    echo "</ul>";
+}
+?>
